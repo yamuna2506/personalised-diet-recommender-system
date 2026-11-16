@@ -604,7 +604,8 @@ if not st.session_state.get("generated", False):
                 )
 
                 # Save generated results
-                st.session_state.goal = goal
+                goal = selected_goal
+                st.session_state.goal = selected_goal
                 st.session_state.bmi = bmi
                 st.session_state.water = water
                 st.session_state.protein = protein
