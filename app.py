@@ -627,11 +627,11 @@ if st.session_state.get("generated", False):
 
     action_col, _ = st.columns([1, 4])
     with action_col:
-        if st.button("✎ Edit profile & preferences", use_container_width=True):
-    st.session_state.generated = False
-    st.session_state.setup_step = 0
-    st.session_state.pop("goal", None)
-    st.rerun()
+       if st.button("✎ Edit profile & preferences", use_container_width=True):
+            st.session_state.generated = False
+            st.session_state.setup_step = 0
+            st.session_state.pop("goal", None)
+            st.rerun()
     overview_tab, explore_tab, planner_tab, reports_tab = st.tabs([
         "Nutrition overview", "Recipe explorer", "7-day meal planner", "Reports & downloads"
     ])
