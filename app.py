@@ -12,8 +12,8 @@ from recipe_meal_planner import generate_recipe_meal_plan, find_meal_replacement
 # BASE DIRECTORY & FILE PATHS
 # =====================================================
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATASET_PATH = os.path.join(BASE_DIR, "Cleaned_data", "usda_food_nutrition_per_100g.csv")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATASET_PATH = os.path.join(BASE_DIR, "usda_food_nutrition_per_100g.csv")
 
 # =====================================================
 # PAGE CONFIG
