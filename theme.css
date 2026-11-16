@@ -1,0 +1,363 @@
+/* NutriAI — botanical wellness theme */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  --page: #F5F7F0;
+  --surface: #FFFFFF;
+  --surface-soft: #EEF3E9;
+  --ink: #263B32;
+  --muted: #65756B;
+  --green: #315C46;
+  --green-dark: #244735;
+  --sage: #A8B99A;
+  --line: #DCE5D8;
+  --sand: #E8DCC5;
+  --shadow: 0 10px 30px rgba(38, 59, 50, .07);
+}
+html, body, [data-testid="stAppViewContainer"] {
+  background: var(--page) !important;
+  color: var(--ink) !important;
+  font-family: 'DM Sans', sans-serif;
+}
+[data-testid="stHeader"] { background: rgba(245,247,240,.88) !important; }
+[data-testid="stMain"] { background: transparent !important; }
+.main .block-container { max-width: 1240px; padding-top: 2.1rem; padding-bottom: 3rem; }
+h1, h2, h3, h4, h5, h6, [data-testid="stMarkdownContainer"] h1,
+[data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 {
+  color: var(--ink) !important; font-family: 'Manrope', sans-serif !important;
+  letter-spacing: -.025em;
+}
+p, li, label, .stMarkdown, [data-testid="stCaptionContainer"] {
+  color: var(--ink);
+}
+[data-testid="stCaptionContainer"] { color: var(--muted) !important; }
+.app-hero {
+  position: relative; overflow: hidden; display: flex; align-items: center;
+  justify-content: space-between; gap: 2rem; padding: 2.6rem 3rem;
+  margin: .2rem 0 2rem; min-height: 245px; border-radius: 28px;
+  background: linear-gradient(120deg, #E8F0E4 0%, #F4F0E5 58%, #E7EBDD 100%);
+  border: 1px solid #DFE8D9; box-shadow: var(--shadow);
+}
+.hero-copy { max-width: 720px; z-index: 1; }
+.hero-eyebrow { color: var(--green); font-size: .72rem; font-weight: 800; letter-spacing: .16em; }
+.app-hero h1 { font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.12; margin: .65rem 0 .75rem; }
+.app-hero p { color: #53675A; font-size: 1.05rem; max-width: 620px; line-height: 1.65; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.2rem; }
+.hero-tags span { color: var(--green); background: rgba(255,255,255,.72); border: 1px solid rgba(49,92,70,.12); border-radius: 999px; padding: .42rem .8rem; font-size: .78rem; font-weight: 700; }
+.hero-art { display: flex; align-items: center; justify-content: center; min-width: 180px; width: 230px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.42); transform: rotate(-8deg); }
+.hero-art span { font-size: 3.1rem; margin: -.25rem; filter: drop-shadow(0 7px 8px rgba(38,59,50,.12)); }
+[data-testid="stSidebar"] { background: #EDF2E9 !important; border-right: 1px solid var(--line); }
+[data-testid="stSidebar"] > div { background: transparent !important; }
+[data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] label { color: var(--ink) !important; }
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .8rem; }
+div[data-testid="stMetric"] {
+  background: var(--surface) !important; border: 1px solid var(--line);
+  padding: 1.1rem 1.2rem; border-radius: 18px; box-shadow: var(--shadow);
+}
+[data-testid="stMetricLabel"] p { color: var(--muted) !important; font-weight: 600; }
+[data-testid="stMetricValue"] { color: var(--green) !important; font-family: 'Manrope', sans-serif; }
+.stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button {
+  background: var(--green) !important; color: #FFFFFF !important; border: 1px solid var(--green) !important;
+  border-radius: 12px !important; min-height: 2.7rem; font-weight: 700 !important;
+  transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.stButton > button:hover, .stDownloadButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover {
+  background: var(--green-dark) !important; border-color: var(--green-dark) !important;
+  color: white !important; box-shadow: 0 6px 16px rgba(49,92,70,.18); transform: translateY(-1px);
+}
+.stButton > button:focus, .stDownloadButton > button:focus { box-shadow: 0 0 0 3px rgba(49,92,70,.2) !important; }
+input, textarea, [data-baseweb="select"] > div, [data-baseweb="input"] > div {
+  background: #FFFFFF !important; color: var(--ink) !important; border-color: #CAD7C8 !important;
+  border-radius: 10px !important;
+}
+input::placeholder, textarea::placeholder { color: #849187 !important; }
+[data-baseweb="select"] *, [data-baseweb="popover"] *, [role="option"] {
+  color: var(--ink) !important;
+}
+[role="option"] { background: #FFFFFF !important; }
+[role="option"]:hover { background: var(--surface-soft) !important; }
+[data-testid="stDataFrame"], [data-testid="stTable"] {
+  border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+}
+[data-testid="stExpander"] {
+  background: var(--surface) !important; border: 1px solid var(--line) !important;
+  border-radius: 14px !important; box-shadow: 0 3px 12px rgba(38,59,50,.035);
+}
+[data-testid="stTabs"] button[role="tab"] { color: var(--muted) !important; font-weight: 700; }
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] { color: var(--green) !important; }
+hr { border-color: var(--line) !important; }
+.stProgress > div > div > div > div { background: var(--green) !important; }
+/* Keep Streamlit notices readable regardless of the host theme. */
+[data-testid="stAlert"] {
+  background: #EEF3E9 !important;
+  color: #263B32 !important;
+  border: 1px solid #DCE5D8 !important;
+  border-radius: 14px !important;
+}
+[data-testid="stAlert"] *,
+[data-testid="stAlert"] p,
+[data-testid="stAlert"] span,
+[data-testid="stAlert"] [data-testid="stMarkdownContainer"] {
+  color: #263B32 !important;
+}
+[data-testid="stButton"] button,
+[data-testid="stFormSubmitButton"] button,
+[data-testid="stDownloadButton"] button {
+  color: #FFFFFF !important;
+}
+[data-testid="stButton"] button *,
+[data-testid="stFormSubmitButton"] button *,
+[data-testid="stDownloadButton"] button * {
+  color: #FFFFFF !important;
+}
+@media (max-width: 760px) {
+  .main .block-container { padding: 1rem 1rem 2rem; }
+  .app-hero { padding: 1.6rem; min-height: auto; }
+  .hero-art { display: none; }
+  .app-hero h1 { font-size: 2rem; }
+}
+
+
+/* ---------------------------------------------------------
+   ACCESSIBILITY / CONTRAST HARDENING
+   Keep every content surface and its text on a coordinated,
+   predictable light palette. Dark green is reserved for
+   buttons and selected accents, always with white text.
+   --------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+  --page: #F5F7F0;
+  --surface: #FFFFFF;
+  --surface-soft: #EEF3E9;
+  --ink: #263B32;
+  --muted: #52665A;
+  --green: #315C46;
+  --green-dark: #244735;
+  --line: #DCE5D8;
+}
+
+/* Main canvas, sidebar and Streamlit containers */
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+section.main,
+.main .block-container {
+  background-color: #F5F7F0 !important;
+  color: #263B32 !important;
+}
+[data-testid="stSidebar"],
+[data-testid="stSidebar"] > div,
+[data-testid="stSidebarContent"] {
+  background-color: #EDF2E9 !important;
+  color: #263B32 !important;
+}
+[data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stContainer"],
+[data-testid="stForm"] {
+  color: #263B32;
+}
+
+/* Text defaults: dark text on the light canvas */
+[data-testid="stAppViewContainer"] h1,
+[data-testid="stAppViewContainer"] h2,
+[data-testid="stAppViewContainer"] h3,
+[data-testid="stAppViewContainer"] h4,
+[data-testid="stAppViewContainer"] p,
+[data-testid="stAppViewContainer"] li,
+[data-testid="stAppViewContainer"] label,
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stMarkdownContainer"] {
+  color: #263B32 !important;
+}
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] * {
+  color: #52665A !important;
+}
+
+/* Streamlit notices: the former Reports summary used st.info(),
+   whose default blue surface could conflict with green text. */
+div[data-testid="stAlert"],
+div[data-testid="stAlert"] > div,
+div[data-testid="stAlert"] [data-testid="stMarkdownContainer"],
+div[data-testid="stNotification"],
+div[data-testid="stNotification"] > div,
+div[data-testid="stNotification"] [data-testid="stMarkdownContainer"] {
+  background-color: #EEF3E9 !important;
+  color: #263B32 !important;
+  border-color: #DCE5D8 !important;
+}
+div[data-testid="stAlert"] *,
+div[data-testid="stNotification"] *,
+div[data-testid="stAlert"] p,
+div[data-testid="stNotification"] p {
+  color: #263B32 !important;
+}
+
+/* Cards, expanders and their nested contents */
+[data-testid="stExpander"],
+[data-testid="stExpander"] details,
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] [data-testid="stExpanderDetails"],
+[data-testid="stExpander"] [data-testid="stVerticalBlock"] {
+  background-color: #FFFFFF !important;
+  color: #263B32 !important;
+  border-color: #DCE5D8 !important;
+}
+[data-testid="stExpander"] summary *,
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"] *,
+[data-testid="stExpander"] p,
+[data-testid="stExpander"] label {
+  color: #263B32 !important;
+}
+
+/* Inputs, dropdowns and popovers */
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea,
+[data-testid="stDateInput"] input,
+[data-baseweb="select"] > div,
+[data-baseweb="input"] > div,
+[data-baseweb="popover"],
+[data-baseweb="menu"],
+[role="listbox"],
+[role="option"] {
+  background-color: #FFFFFF !important;
+  color: #263B32 !important;
+  border-color: #CAD7C8 !important;
+}
+[data-baseweb="select"] *,
+[data-baseweb="popover"] *,
+[data-baseweb="menu"] *,
+[role="listbox"] *,
+[role="option"] * {
+  color: #263B32 !important;
+}
+[role="option"]:hover,
+[aria-selected="true"][role="option"] {
+  background-color: #EEF3E9 !important;
+}
+
+/* Buttons: always white text on forest-green surfaces */
+.stButton > button,
+.stDownloadButton > button,
+[data-testid="stFormSubmitButton"] > button,
+[data-testid="stButton"] button,
+[data-testid="stDownloadButton"] button {
+  background-color: #315C46 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #315C46 !important;
+}
+.stButton > button *,
+.stDownloadButton > button *,
+[data-testid="stFormSubmitButton"] > button *,
+[data-testid="stButton"] button *,
+[data-testid="stDownloadButton"] button * {
+  color: #FFFFFF !important;
+}
+.stButton > button:hover,
+.stDownloadButton > button:hover,
+[data-testid="stFormSubmitButton"] > button:hover {
+  background-color: #244735 !important;
+  color: #FFFFFF !important;
+}
+
+/* Metrics and data presentation */
+div[data-testid="stMetric"],
+[data-testid="stDataFrame"],
+[data-testid="stTable"] {
+  background-color: #FFFFFF !important;
+  color: #263B32 !important;
+  border-color: #DCE5D8 !important;
+}
+[data-testid="stMetricLabel"],
+[data-testid="stMetricLabel"] *,
+[data-testid="stMetricValue"],
+[data-testid="stMetricValue"] * {
+  color: #263B32 !important;
+}
+
+/* Reports tab: explicit, high-contrast nutrition summary card */
+.report-summary {
+  margin: .6rem 0 1.4rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: #EAF2E7 !important;
+  color: #263B32 !important;
+  border: 1px solid #D4E2D0;
+  box-shadow: 0 8px 22px rgba(38, 59, 50, .06);
+}
+.report-summary-heading { margin-bottom: 1rem; }
+.report-summary-kicker {
+  color: #315C46 !important;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.report-summary h3 {
+  color: #263B32 !important;
+  margin: .35rem 0 0;
+}
+.report-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+}
+.report-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #DCE5D8;
+  border-radius: 14px;
+  background: #FFFFFF !important;
+  color: #263B32 !important;
+}
+.report-summary-item span {
+  color: #52665A !important;
+  font-size: .8rem;
+  font-weight: 600;
+}
+.report-summary-item strong {
+  color: #244735 !important;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+.report-summary-wide { grid-column: 1 / -1; }
+.report-summary-note {
+  margin: 1rem 0 0;
+  color: #52665A !important;
+  font-size: .82rem;
+}
+@media (max-width: 560px) {
+  .report-summary-grid { grid-template-columns: 1fr; }
+  .report-summary-wide { grid-column: auto; }
+}
+
+/* Navigation tabs: readable inactive and active states */
+[data-testid="stTabs"] button[role="tab"] {
+  color: #52665A !important;
+  background-color: transparent !important;
+}
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+  color: #244735 !important;
+  border-bottom-color: #315C46 !important;
+}
+
+/* Ensure readable text on interactive controls */
+[data-testid="stRadio"] label,
+[data-testid="stCheckbox"] label,
+[data-testid="stSelectbox"] label,
+[data-testid="stSlider"] label,
+[data-testid="stNumberInput"] label,
+[data-testid="stTextInput"] label,
+[data-testid="stTextArea"] label {
+  color: #263B32 !important;
+}
