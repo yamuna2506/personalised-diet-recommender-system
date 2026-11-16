@@ -636,7 +636,7 @@ if st.session_state.get("generated", False):
         "Nutrition overview", "Recipe explorer", "7-day meal planner", "Reports & downloads"
     ])
 
-    goal = st.session_state.goal
+    goal = st.session_state.get("goal", "Weight maintenance")
     bmi = st.session_state.bmi
     water = st.session_state.water
     protein = st.session_state.protein
