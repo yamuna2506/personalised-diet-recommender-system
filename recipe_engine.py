@@ -7,8 +7,7 @@ from pathlib import Path
 import re
 import pandas as pd
 
-DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "datasets" / "recipes"
-
+DEFAULT_DATA_DIR = Path(__file__).resolve().parent
 
 def load_recipe_database(data_dir=DEFAULT_DATA_DIR):
     """Load the normalized recipe tables and validate their relationships."""
