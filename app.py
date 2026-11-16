@@ -626,8 +626,9 @@ if not st.session_state.get("generated", False):
 if st.session_state.get("generated", False):
 
     action_col, _ = st.columns([1, 4])
+
     with action_col:
-       if st.button("✎ Edit profile & preferences", use_container_width=True):
+        if st.button("✎ Edit profile & preferences", use_container_width=True):
             st.session_state.generated = False
             st.session_state.setup_step = 0
             st.session_state.pop("goal", None)
