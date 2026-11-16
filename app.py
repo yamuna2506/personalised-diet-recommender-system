@@ -29,7 +29,9 @@ st.set_page_config(
 # BOTANICAL WELLNESS THEME
 # =====================================================
 
-THEME_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles", "theme.css")
+
+THEME_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "theme.css")
+
 with open(THEME_PATH, "r", encoding="utf-8") as theme_file:
     st.markdown(f"<style>{theme_file.read()}</style>", unsafe_allow_html=True)
 
