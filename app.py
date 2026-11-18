@@ -522,7 +522,7 @@ st.selectbox(
             st.markdown("**Your preferences**")
 
             st.write(
-                f"Goal: {st.session_state.profile_goal}"
+                f"Goal: {st.session_state.profile_goal_input}"
             )
 
             st.write(
@@ -588,7 +588,8 @@ st.selectbox(
                 # Calculate nutrition estimates
 
                 # Calculate nutrition estimates
-                selected_goal = st.session_state.profile_goal
+                selected_goal = st.session_state.profile_goal_input
+                st.session_state.profile_goal = selected_goal
 
                 bmr = calculate_bmr(
                     gender_value, weight, height, age
