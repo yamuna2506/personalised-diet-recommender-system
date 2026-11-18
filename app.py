@@ -106,15 +106,19 @@ def calculate_bmr(gender, weight, height, age):
 # RECOMMENDATION FUNCTION
 # =====================================================
 
+
 def calculate_goal_calories(tdee, selected_goal, age=None):
     if age is not None and age < 18:
         return round(tdee)
 
     if selected_goal == "Weight loss":
-        return max(0, round(tdee * 0.90))
+        return round(tdee * 0.90)
 
-    if selected_goal == "Weight gain":
-        return round(tdee * 1.08)
+    elif selected_goal == "Weight gain":
+        return round(tdee * 1.10)
+
+    elif selected_goal == "Weight maintenance":
+        return round(tdee)
 
     return round(tdee)
 
