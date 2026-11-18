@@ -368,14 +368,14 @@ if not st.session_state.get("generated", False):
 
         with g1:
 
-            st.selectbox(
-         "Fitness goal",
-         [
-           "Weight loss",
-          "Weight maintenance",
-          "Weight gain"
-       ],
-       key="profile_goal"
+st.selectbox(
+    "Fitness goal",
+    [
+        "Weight loss",
+        "Weight maintenance",
+        "Weight gain"
+    ],
+    key="profile_goal_input"
 )
 
             st.selectbox(
