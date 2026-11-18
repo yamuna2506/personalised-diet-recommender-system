@@ -366,17 +366,17 @@ if not st.session_state.get("generated", False):
 
         g1, g2 = st.columns(2)
 
-        with g1:
+          with g1:
 
-st.selectbox(
-    "Fitness goal",
-    [
-        "Weight loss",
-        "Weight maintenance",
-        "Weight gain"
-    ],
-    key="profile_goal_input"
-)
+            st.selectbox(
+                "Fitness goal",
+                [
+                    "Weight loss",
+                    "Weight maintenance",
+                    "Weight gain"
+                ],
+                key="profile_goal_input"
+            )
 
             st.selectbox(
                 "Activity level",
@@ -396,7 +396,6 @@ st.selectbox(
                 max_value=10,
                 key="profile_meals"
             )
-
         with g2:
 
             st.selectbox(
