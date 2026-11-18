@@ -218,6 +218,8 @@ if "profile_weight_input" not in st.session_state:
 # Other saved preferences
 st.session_state.setdefault("profile_activity", "Lightly Active")
 st.session_state.setdefault("profile_goal", "Weight maintenance")
+if "profile_goal_input" not in st.session_state:
+    st.session_state.profile_goal_input = st.session_state.profile_goal
 st.session_state.setdefault("profile_meals", 3)
 
 st.session_state.setdefault("recipe_diet", "Vegetarian")
@@ -367,14 +369,14 @@ if not st.session_state.get("generated", False):
         with g1:
 
             st.selectbox(
-                "Fitness goal",
-                [
-                    "Weight loss",
-                    "Weight maintenance",
-                    "Weight gain"
-                ],
-                key="profile_goal"
-            )
+         "Fitness goal",
+         [
+           "Weight loss",
+          "Weight maintenance",
+          "Weight gain"
+       ],
+       key="profile_goal"
+)
 
             st.selectbox(
                 "Activity level",
