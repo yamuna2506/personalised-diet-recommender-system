@@ -237,6 +237,9 @@ def calculate_tdee(bmr, activity_level):
 
 
 def move_setup_step(next_step):
+    if next_step == 2:
+        st.session_state.profile_goal = st.session_state.profile_goal_input
+
     st.session_state.setup_step = next_step
 
 
