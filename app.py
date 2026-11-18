@@ -29,7 +29,6 @@ st.set_page_config(
 # BOTANICAL WELLNESS THEME
 # =====================================================
 
-
 THEME_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "theme.css")
 
 with open(THEME_PATH, "r", encoding="utf-8") as theme_file:
@@ -106,7 +105,6 @@ def calculate_bmr(gender, weight, height, age):
 # RECOMMENDATION FUNCTION
 # =====================================================
 
-
 def calculate_goal_calories(tdee, selected_goal, age=None):
     if age is not None and age < 18:
         return round(tdee)
@@ -115,7 +113,7 @@ def calculate_goal_calories(tdee, selected_goal, age=None):
         return round(tdee * 0.90)
 
     elif selected_goal == "Weight gain":
-        return round(tdee * 1.10)
+        return round(tdee * 1.08)
 
     elif selected_goal == "Weight maintenance":
         return round(tdee)
@@ -189,20 +187,14 @@ def recommend_foods(
 
 
 # =====================================================
-# TITLE
-# =====================================================
-
-# =====================================================
 # GUIDED SETUP — PROFILE, GOALS & FOOD PREFERENCES
 # =====================================================
 
-# Persistent profile values
 st.session_state.setdefault("profile_gender", "Female")
 st.session_state.setdefault("profile_age", 20)
 st.session_state.setdefault("profile_height", 166)
 st.session_state.setdefault("profile_weight", 70)
 
-# Separate widget keys
 if "profile_gender_input" not in st.session_state:
     st.session_state.profile_gender_input = st.session_state.profile_gender
 
@@ -215,11 +207,12 @@ if "profile_height_input" not in st.session_state:
 if "profile_weight_input" not in st.session_state:
     st.session_state.profile_weight_input = st.session_state.profile_weight
 
-# Other saved preferences
 st.session_state.setdefault("profile_activity", "Lightly Active")
 st.session_state.setdefault("profile_goal", "Weight maintenance")
+
 if "profile_goal_input" not in st.session_state:
     st.session_state.profile_goal_input = st.session_state.profile_goal
+
 st.session_state.setdefault("profile_meals", 3)
 
 st.session_state.setdefault("recipe_diet", "Vegetarian")
@@ -228,7 +221,6 @@ st.session_state.setdefault("recipe_cuisine", "All cuisines")
 st.session_state.setdefault("recipe_spice", "All spice levels")
 st.session_state.setdefault("recipe_exclusions_text", "")
 
-# Setup navigation
 st.session_state.setdefault("setup_step", 0)
 
 
@@ -249,14 +241,11 @@ def move_setup_step(next_step):
 
 
 def save_profile_and_move(next_step):
-
-    # Save profile input values
     st.session_state.profile_gender = st.session_state.profile_gender_input
     st.session_state.profile_age = st.session_state.profile_age_input
     st.session_state.profile_height = st.session_state.profile_height_input
     st.session_state.profile_weight = st.session_state.profile_weight_input
 
-    # Move to next page
     st.session_state.setup_step = next_step
 
 
@@ -366,8 +355,6 @@ if not st.session_state.get("generated", False):
 
         g1, g2 = st.columns(2)
 
-                g1, g2 = st.columns(2)
-
         with g1:
             st.selectbox(
                 "Fitness goal",
@@ -476,6 +463,7 @@ if not st.session_state.get("generated", False):
                 on_click=move_setup_step,
                 args=(2,)
             )
+
     # =================================================
     # STEP 3 — REVIEW
     # =================================================
@@ -566,7 +554,6 @@ if not st.session_state.get("generated", False):
                 use_container_width=True
             ):
 
-                # Read saved profile values
                 gender_value = (
                     1 if st.session_state.profile_gender == "Male" else 0
                 )
@@ -580,11 +567,7 @@ if not st.session_state.get("generated", False):
                 )
 
                 activity_level = st.session_state.profile_activity
-                selected_goal = st.session_state.profile_goal
 
-                # Calculate nutrition estimates
-
-                # Calculate nutrition estimates
                 selected_goal = st.session_state.profile_goal_input
                 st.session_state.profile_goal = selected_goal
 
@@ -605,7 +588,6 @@ if not st.session_state.get("generated", False):
                     selected_goal=selected_goal
                 )
 
-                # Save generated results
                 st.session_state.goal = selected_goal
                 st.session_state.bmi = bmi
                 st.session_state.water = water
@@ -617,7 +599,6 @@ if not st.session_state.get("generated", False):
 
                 st.session_state.generated = True
                 st.rerun()
-
 
 
 # =====================================================
@@ -634,6 +615,7 @@ if st.session_state.get("generated", False):
             st.session_state.setup_step = 0
             st.session_state.pop("goal", None)
             st.rerun()
+
     overview_tab, explore_tab, planner_tab, reports_tab = st.tabs([
         "Nutrition overview", "Recipe explorer", "7-day meal planner", "Reports & downloads"
     ])
@@ -760,75 +742,76 @@ if st.session_state.get("generated", False):
                             query_items, match_mode=mode, database=RECIPE_DB, limit=100
                         )
 
-                    st.markdown(f"**{len(matches)} matching recipe(s)**")
+                    if query_items:
+                        st.markdown(f"**{len(matches)} matching recipe(s)**")
 
-                    if matches.empty:
-                        st.info("No recipes found. Try a broader dish name or fewer ingredients.")
+                        if matches.empty:
+                            st.info("No recipes found. Try a broader dish name or fewer ingredients.")
 
-                    for _, match in matches.iterrows():
-                        recipe = get_recipe_details(match["recipe_id"], RECIPE_DB)
+                        for _, match in matches.iterrows():
+                            recipe = get_recipe_details(match["recipe_id"], RECIPE_DB)
 
-                        if not recipe:
-                            continue
+                            if not recipe:
+                                continue
 
-                        with st.expander(
-                            f"{recipe['recipe_name']} · {float(recipe['kcal']):.0f} kcal/serving · "
-                            f"{float(recipe['protein_g']):.1f} g protein"
-                        ):
-                            if "matched_ingredients" in match.index:
+                            with st.expander(
+                                f"{recipe['recipe_name']} · {float(recipe['kcal']):.0f} kcal/serving · "
+                                f"{float(recipe['protein_g']):.1f} g protein"
+                            ):
+                                if "matched_ingredients" in match.index:
+                                    st.caption(
+                                        f"Matches {int(match['matched_ingredients'])} of "
+                                        f"{int(match['selected_ingredient_count'])} entered ingredients "
+                                        f"({int(match['match_percent'])}%). Matched: {match.get('matched_ingredient_names', '')}"
+                                    )
+
                                 st.caption(
-                                    f"Matches {int(match['matched_ingredients'])} of "
-                                    f"{int(match['selected_ingredient_count'])} entered ingredients "
-                                    f"({int(match['match_percent'])}%). Matched: {match.get('matched_ingredient_names', '')}"
+                                    f"{recipe['meal_type']} · {recipe['diet_type']} · {recipe['cuisine']} · "
+                                    f"Prep {int(recipe['prep_time_min'])} min · Cook {int(recipe['cook_time_min'])} min"
                                 )
 
-                            st.caption(
-                                f"{recipe['meal_type']} · {recipe['diet_type']} · {recipe['cuisine']} · "
-                                f"Prep {int(recipe['prep_time_min'])} min · Cook {int(recipe['cook_time_min'])} min"
-                            )
+                                st.caption(
+                                    f"Budget: {recipe.get('budget_category', 'Regular')} · "
+                                    f"Spice: {recipe.get('spice_level', 'Medium')} · "
+                                    f"Recipe yield: {int(recipe['servings'])} servings"
+                                )
 
-                            st.caption(
-                                f"Budget: {recipe.get('budget_category', 'Regular')} · "
-                                f"Spice: {recipe.get('spice_level', 'Medium')} · "
-                                f"Recipe yield: {int(recipe['servings'])} servings"
-                            )
+                                st.markdown("**Ingredients**")
 
-                            st.markdown("**Ingredients**")
-
-                            rows = [
-                                {
-                                    "Ingredient": item["ingredient_name"],
-                                    "Quantity": f"{float(item['quantity_g']):g} g",
-                                    "Preparation note": item.get("ingredient_state_note", "")
-                                }
-                                for item in recipe["ingredients"]
-                            ]
-
-                            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-
-                            st.markdown("**Cooking method**")
-
-                            raw_steps = str(recipe["instructions"]).splitlines()
-
-                            clean_steps = [
-                                re.sub(r"^\s*\d+[.)]\s*", "", step).strip()
-                                for step in raw_steps if step.strip()
-                            ]
-
-                            if len(clean_steps) <= 1:
-                                clean_steps = [
-                                    part.strip() for part in re.split(
-                                        r"(?<!\d)\.\s+(?=[A-Z])", str(recipe["instructions"])
-                                    ) if part.strip()
+                                rows = [
+                                    {
+                                        "Ingredient": item["ingredient_name"],
+                                        "Quantity": f"{float(item['quantity_g']):g} g",
+                                        "Preparation note": item.get("ingredient_state_note", "")
+                                    }
+                                    for item in recipe["ingredients"]
                                 ]
 
-                            for step_no, step in enumerate(clean_steps, 1):
-                                st.markdown(f"{step_no}. {step.rstrip('.')}.")
+                                st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
-                            if recipe.get("allergens"):
-                                st.caption(f"Potential allergens: {recipe['allergens']}")
+                                st.markdown("**Cooking method**")
 
-                            st.caption("Nutrition and cooking times are estimates. Check ingredient labels and food-safety guidance.")
+                                raw_steps = str(recipe["instructions"]).splitlines()
+
+                                clean_steps = [
+                                    re.sub(r"^\s*\d+[.)]\s*", "", step).strip()
+                                    for step in raw_steps if step.strip()
+                                ]
+
+                                if len(clean_steps) <= 1:
+                                    clean_steps = [
+                                        part.strip() for part in re.split(
+                                            r"(?<!\d)\.\s+(?=[A-Z])", str(recipe["instructions"])
+                                        ) if part.strip()
+                                    ]
+
+                                for step_no, step in enumerate(clean_steps, 1):
+                                    st.markdown(f"{step_no}. {step.rstrip('.')}.")
+
+                                if recipe.get("allergens"):
+                                    st.caption(f"Potential allergens: {recipe['allergens']}")
+
+                                st.caption("Nutrition and cooking times are estimates. Check ingredient labels and food-safety guidance.")
 
             with pantry_tab:
                 st.subheader("Cook With What I Have")
@@ -1251,4 +1234,4 @@ if st.session_state.get("generated", False):
 # FOOTER
 # =====================================================
 
-st.markdown("---")         
+st.markdown("---")
