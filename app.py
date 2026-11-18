@@ -366,8 +366,9 @@ if not st.session_state.get("generated", False):
 
         g1, g2 = st.columns(2)
 
-          with g1:
+                g1, g2 = st.columns(2)
 
+        with g1:
             st.selectbox(
                 "Fitness goal",
                 [
@@ -396,8 +397,8 @@ if not st.session_state.get("generated", False):
                 max_value=10,
                 key="profile_meals"
             )
-        with g2:
 
+        with g2:
             st.selectbox(
                 "Diet preference",
                 [
@@ -460,7 +461,6 @@ if not st.session_state.get("generated", False):
         back_col, next_col = st.columns(2)
 
         with back_col:
-
             st.button(
                 "← Back to profile",
                 use_container_width=True,
@@ -469,7 +469,6 @@ if not st.session_state.get("generated", False):
             )
 
         with next_col:
-
             st.button(
                 "Review my details  →",
                 type="primary",
@@ -477,7 +476,6 @@ if not st.session_state.get("generated", False):
                 on_click=move_setup_step,
                 args=(2,)
             )
-
     # =================================================
     # STEP 3 — REVIEW
     # =================================================
