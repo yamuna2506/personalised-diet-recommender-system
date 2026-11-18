@@ -584,17 +584,15 @@ if not st.session_state.get("generated", False):
                 selected_goal = st.session_state.profile_goal
 
                 # Calculate nutrition estimates
+
+                # Calculate nutrition estimates
+                selected_goal = st.session_state.profile_goal
+
                 bmr = calculate_bmr(
-                    gender_value,
-                    weight,
-                    height,
-                    age
+                    gender_value, weight, height, age
                 )
 
-                tdee = calculate_tdee(
-                    bmr,
-                    activity_level
-                )
+                tdee = calculate_tdee(bmr, activity_level)
 
                 goal, bmi, water, protein, foods, target_calories = recommend_foods(
                     gender=gender_value,
@@ -608,7 +606,6 @@ if not st.session_state.get("generated", False):
                 )
 
                 # Save generated results
-                goal = selected_goal
                 st.session_state.goal = selected_goal
                 st.session_state.bmi = bmi
                 st.session_state.water = water
@@ -619,8 +616,8 @@ if not st.session_state.get("generated", False):
                 st.session_state.target_calories = target_calories
 
                 st.session_state.generated = True
-
                 st.rerun()
+
 
 
 # =====================================================
