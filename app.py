@@ -222,6 +222,27 @@ def recommend_foods(
 # GUIDED SETUP — PROFILE, GOALS & FOOD PREFERENCES
 # =====================================================
 
+# FIX: Streamlit deletes the value of a widget key as soon as that widget
+# is not drawn in a run. The goal / preference widgets only exist on
+# step 2, so by the time "Generate" is clicked their values were wiped
+# and the defaults below (e.g. "Weight maintenance") were applied.
+# Re-assigning each key to itself at the top of every run keeps the value.
+
+PERSISTENT_WIDGET_KEYS = [
+    "profile_goal_input",
+    "profile_activity",
+    "profile_meals",
+    "recipe_diet",
+    "recipe_budget",
+    "recipe_cuisine",
+    "recipe_spice",
+    "recipe_exclusions_text",
+]
+
+for _key in PERSISTENT_WIDGET_KEYS:
+    if _key in st.session_state:
+        st.session_state[_key] = st.session_state[_key]
+
 # Persistent profile values
 
 st.session_state.setdefault("profile_gender", "Female")
