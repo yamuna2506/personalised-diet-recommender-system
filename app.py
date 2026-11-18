@@ -579,13 +579,18 @@ if not st.session_state.get("generated", False):
                 args=(1,)
             )
 
-        with generate_col:
+                with generate_col:
 
             if st.button(
                 "Generate my nutrition plan",
                 type="primary",
                 use_container_width=True
             ):
+
+                selected_goal = st.session_state.profile_goal_input
+
+                st.session_state.profile_goal = selected_goal
+                st.session_state.goal = selected_goal
 
                 gender_value = (
                     1 if st.session_state.profile_gender == "Male" else 0
@@ -595,14 +600,8 @@ if not st.session_state.get("generated", False):
                 height = int(st.session_state.profile_height)
                 weight = float(st.session_state.profile_weight)
 
-                meals_per_day = int(
-                    st.session_state.profile_meals
-                )
-
+                meals_per_day = int(st.session_state.profile_meals)
                 activity_level = st.session_state.profile_activity
-
-                selected_goal = st.session_state.profile_goal_input
-                st.session_state.profile_goal = selected_goal
 
                 bmr = calculate_bmr(
                     gender_value, weight, height, age
@@ -610,7 +609,7 @@ if not st.session_state.get("generated", False):
 
                 tdee = calculate_tdee(bmr, activity_level)
 
-                goal, bmi, water, protein, foods, target_calories = recommend_foods(
+                result = recommend_foods(
                     gender=gender_value,
                     age=age,
                     height=height,
@@ -621,7 +620,10 @@ if not st.session_state.get("generated", False):
                     selected_goal=selected_goal
                 )
 
+                goal, bmi, water, protein, foods, target_calories = result
+
                 st.session_state.goal = selected_goal
+                st.session_state.profile_goal = selected_goal
                 st.session_state.bmi = bmi
                 st.session_state.water = water
                 st.session_state.protein = protein
@@ -632,22 +634,6 @@ if not st.session_state.get("generated", False):
 
                 st.session_state.generated = True
                 st.rerun()
-
-
-# =====================================================
-# LOAD SAVED RESULTS
-# =====================================================
-
-if st.session_state.get("generated", False):
-
-    action_col, _ = st.columns([1, 4])
-
-    with action_col:
-        if st.button("✎ Edit profile & preferences", use_container_width=True):
-            st.session_state.generated = False
-            st.session_state.setup_step = 0
-            st.session_state.pop("goal", None)
-            st.rerun()
 
     overview_tab, explore_tab, planner_tab, reports_tab = st.tabs([
         "Nutrition overview", "Recipe explorer", "7-day meal planner", "Reports & downloads"
