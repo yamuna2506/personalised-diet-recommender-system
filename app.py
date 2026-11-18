@@ -92,6 +92,28 @@ def clean_food_name(food):
 df["food"] = df["food"].apply(clean_food_name)
 
 
+# =====================================================
+# BMI CLASSIFICATION
+# =====================================================
+
+def get_bmi_status(bmi, age):
+    if age < 18:
+        return "BMI assessment requires age-specific interpretation"
+
+    if bmi < 18.5:
+        return "Underweight"
+    elif bmi < 25:
+        return "Normal weight"
+    elif bmi < 30:
+        return "Overweight"
+    else:
+        return "Obesity"
+
+
+# =====================================================
+# BMR CALCULATION
+# =====================================================
+
 def calculate_bmr(gender, weight, height, age):
     if gender == 1:
         bmr = 10 * weight + 6.25 * height - 5 * age + 5
@@ -224,6 +246,10 @@ st.session_state.setdefault("recipe_exclusions_text", "")
 st.session_state.setdefault("setup_step", 0)
 
 
+# =====================================================
+# TDEE CALCULATION
+# =====================================================
+
 def calculate_tdee(bmr, activity_level):
     activity_factors = {
         "Sedentary": 1.2,
@@ -251,6 +277,10 @@ def save_profile_and_move(next_step):
 
     st.session_state.setup_step = next_step
 
+
+# =====================================================
+# GUIDED SETUP
+# =====================================================
 
 if not st.session_state.get("generated", False):
 
@@ -641,23 +671,38 @@ if st.session_state.get("generated", False):
         ~foods["food"].str.contains("raw|inedible|refuse", case=False, na=False)
     ]
 
+    # =================================================
+    # NUTRITION OVERVIEW
+    # =================================================
+
     with overview_tab:
+
         st.success(f"🎯 Your Selected Goal: {goal}")
 
         # =================================================
         # BMI STATUS
         # =================================================
 
+        bmi_status = get_bmi_status(bmi, age)
+
         if age < 18:
-            st.info("BMI is displayed for reference. Adult BMI categories are not used for people under 18; age- and sex-specific assessment is needed.")
-        elif bmi < 18.5:
-            st.warning("⚠️ You are Underweight")
-        elif bmi < 25:
-            st.success("✅ You are Healthy")
-        elif bmi < 30:
-            st.warning("⚠️ You are Overweight")
+            st.info(
+                "BMI is displayed for reference. Adult BMI categories "
+                "are not used for people under 18; age- and sex-specific "
+                "assessment is needed."
+            )
+
+        elif bmi_status == "Underweight":
+            st.warning("⚠️ BMI Status: Underweight")
+
+        elif bmi_status == "Normal weight":
+            st.success("✅ BMI Status: Normal weight")
+
+        elif bmi_status == "Overweight":
+            st.warning("⚠️ BMI Status: Overweight")
+
         else:
-            st.error("🚨 Obesity Risk")
+            st.error("🚨 BMI Status: Obesity")
 
         # =================================================
         # METRICS
@@ -682,7 +727,11 @@ if st.session_state.get("generated", False):
         with col5:
             st.metric("Estimated Daily Calorie Target", target_calories)
 
-        st.caption("Calorie targets are approximate planning estimates, not medical prescriptions. The selected goal applies a 10% deficit or 8% surplus for adults; maintenance uses estimated TDEE.")
+        st.caption(
+            "Calorie targets are approximate planning estimates, not medical prescriptions. "
+            "The selected goal applies a 10% deficit or 8% surplus for adults; "
+            "maintenance uses estimated TDEE."
+        )
 
         # =================================================
         # BMI PROGRESS BAR
@@ -691,16 +740,21 @@ if st.session_state.get("generated", False):
         st.subheader("BMI Indicator")
         st.progress(min(int(bmi * 4), 100))
 
+    # =================================================
+    # RECIPE EXPLORER
+    # =================================================
+
     with explore_tab:
-        # =================================================
-        # RECIPE SEARCH + COOK WITH WHAT I HAVE
-        # =================================================
 
         if RECIPE_DB_ERROR:
             st.error(f"Recipe database could not be loaded: {RECIPE_DB_ERROR}")
 
         else:
             search_tab, pantry_tab = st.tabs(["🔎 Search Recipes", "🥘 Cook With What I Have"])
+
+            # =================================================
+            # SEARCH RECIPES
+            # =================================================
 
             with search_tab:
                 st.subheader("Search Recipes")
@@ -816,6 +870,10 @@ if st.session_state.get("generated", False):
 
                                 st.caption("Nutrition and cooking times are estimates. Check ingredient labels and food-safety guidance.")
 
+            # =================================================
+            # COOK WITH WHAT I HAVE
+            # =================================================
+
             with pantry_tab:
                 st.subheader("Cook With What I Have")
 
@@ -903,10 +961,11 @@ if st.session_state.get("generated", False):
                                     st.markdown(f"{step_no}. {step.rstrip('.')}.")
 
 
+    # =================================================
+    # 7-DAY MEAL PLANNER
+    # =================================================
+
     with planner_tab:
-        # =================================================
-        # RECIPE-BASED PERSONALIZED MEAL PLANNER
-        # =================================================
 
         st.subheader("📅 Personalized Recipe Meal Planner")
 
@@ -1113,6 +1172,10 @@ if st.session_state.get("generated", False):
                             else:
                                 st.caption("No suitable replacement found for this meal with the current filters.")
 
+                # =================================================
+                # DAILY NUTRITION SUMMARY
+                # =================================================
+
                 with st.expander("Daily nutrition summary", expanded=False):
                     st.dataframe(daily_totals, use_container_width=True, hide_index=True)
 
@@ -1179,10 +1242,11 @@ if st.session_state.get("generated", False):
                 )
 
 
+    # =================================================
+    # REPORTS & DOWNLOADS
+    # =================================================
+
     with reports_tab:
-        # =================================================
-        # HEALTH SUMMARY
-        # =================================================
 
         st.markdown(
             f"""
@@ -1205,7 +1269,7 @@ if st.session_state.get("generated", False):
         )
 
         # =================================================
-        # DOWNLOAD BUTTONS FOR RECOMMENDATIONS
+        # DOWNLOAD BUTTONS
         # =================================================
 
         csv = foods.to_csv(index=False)
